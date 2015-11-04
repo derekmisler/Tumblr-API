@@ -1,2 +1,2 @@
-# Tumblr-API
-API example for PR team for pulling in user-generated content
+## API example for PR team for pulling in user-generated content
+
