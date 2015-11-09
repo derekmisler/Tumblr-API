@@ -1,37 +1,67 @@
+<style>
+[class*="block-grid-"] {
+  display: block;
+  padding: 0;
+  margin: 0 -15px; }
+  [class*="block-grid-"] > li {
+    width: 100%; }
+
+.block-grid-4 > li {
+  display: block;
+  float: left;
+  height: auto;
+  padding: 0 15px 30px;
+  box-sizing: border-box;
+  width: 25%; }
+  .block-grid-4 > li:nth-of-type(1n) {
+    clear: none; }
+  .block-grid-4 > li:nth-of-type(4n+1) {
+    clear: both; }
+  
+#tumblr a {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
+  border: 1px solid #122c42;
+  opacity: 0;
+  -webkit-transition: all 0.35s;
+  -o-transition: all 0.35s;
+  transition: all 0.35s; }
+  #tumblr a:hover {
+    border-radius: 0;
+    border-color: #d94700; }
+
+</style>
+
 <section id="tumblr">
   <h4 class="title"></h4>
   <ul class="block-grid-4"></ul>
 </section>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
-  $.ajax({
-    url: "http://api.tumblr.com/v2/blog/montanamoment.tumblr.com/info?api_key=v6y8zw1aQk66fJevXGoFyv3BHfURcphvUD6hl88BB3yVyLKVm6",
-    dataType: 'jsonp',
-    success: function(info){
-      console.log('title success');
-      $("#tumblr .title").html(info.response.blog.title);
-    }
-  });
   $.ajax({
     url: "http://api.tumblr.com/v2/blog/montanamoment.tumblr.com/posts?api_key=v6y8zw1aQk66fJevXGoFyv3BHfURcphvUD6hl88BB3yVyLKVm6",
     dataType: 'jsonp',
     success: function(posts){
-      console.log('image success');
+      console.log('success');
       var postings = posts.response.posts;
       var text = '';
       for (var i in postings) {
         var p = postings[i];
         var image = p.photos[0].alt_sizes[2];
-        text += '<li><a href="' + p.post_url + '" target="_blank"><img class="" src=' + image.url +'></a></li>';
+        text += '<li><a href="' + p.post_url + '" target="_blank" style="background-image: url(' + image.url + ')"></a></li>';
       }
       $('#tumblr ul').append(text);
-      $(function() {
-        $('#tumblr').find('img').each(function(i) {
-          $(this).delay((i++) * 100).fadeTo(200, 1);
-        });
+      var thumbnail = $('#tumblr').find('a'),
+      thumbnailWidth = thumbnail.width();
+      thumbnail.height(thumbnailWidth);
+      thumbnail.each(function(i) {
+        $(this).delay((i++) * 100).fadeTo(200, 1);
       });
-
     }
   });
-
 </script>
