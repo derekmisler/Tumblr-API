@@ -1,7 +1,7 @@
   var thumbnail,
       thumbnailWidth;
   $.ajax({
-    url: "http://api.tumblr.com/v2/blog/montanamoment.tumblr.com/posts?api_key=v6y8zw1aQk66fJevXGoFyv3BHfURcphvUD6hl88BB3yVyLKVm6",
+    url: "http://api.tumblr.com/v2/blog/montanamoment.tumblr.com/posts?api_key=[insert_key_here]",
     dataType: 'jsonp',
     success: function(posts){
       console.log('success');
@@ -9,8 +9,10 @@
       var text = '';
       for (var i in postings) {
         var p = postings[i];
-        var image = p.photos[0].alt_sizes[2];
-        text += '<li><a href="' + p.post_url + '" target="_blank" style="background-image: url(' + image.url + ')"></a></li>';
+        if (p.photos != undefined) {
+          var image = p.photos[0].alt_sizes[2];
+          text += '<li><a href="' + p.post_url + '" target="_blank" style="background-image: url(' + image.url + ')"></a></li>';
+        }
       }
       $('#tumblr ul').append(text);
       thumbnail = $('#tumblr').find('a'),
